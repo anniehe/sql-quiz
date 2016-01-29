@@ -377,3 +377,43 @@ SELECT common_name, melon_type, quantity, unit_price, total_price
 FROM melons
 JOIN order_items ON (melons.id=order_items.melon_id)
 WHERE order_id = 2725;
+
+
+==========
+25
+
+-----
+
+Write a query that shows the total amount of revenue that comes from
+internet orders.
+
+-----
+
+
+SELECT SUM(order_total)
+FROM orders
+WHERE salesperson_id IS NULL;
+
+
+==========
+26
+
+-----
+
+Challenge: Produce a list of all salespeople and the total amount of orders
+they've sold, while calculating a 15% commission on all of their orders.
+Include their first name, last name, the total of all their sales, and their
+commission. Only report one row per salesperson. Include salespeople who have
+not made any sales.
+
+You will need 'left join' (http://sqlzoo.net/wiki/LEFT_JOIN) and 'group by'
+(http://sqlzoo.net/wiki/SELECT_.._GROUP_BY) clauses to finish this one.
+
+-----
+
+
+SELECT first_name, last_name, SUM(order_total), 0.15*SUM(order_total) AS Commission
+FROM salespeople
+LEFT JOIN orders
+ON (salespeople.id=orders.salesperson_id)
+GROUP BY salespeople.id;
